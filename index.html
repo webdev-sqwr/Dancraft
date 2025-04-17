@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dancraft | Digital Creator</title>
+    <style>
+        :root {
+            --bg-dark: #0f0f12;
+            --bg-darker: #08080a;
+            --accent: #6e00ff;
+            --accent-light: #9d4dff;
+            --text-main: #f0f0f0;
+            --text-secondary: #b0b0b0;
+            --card-bg: #18181c;
+            --card-border: #25252d;
+            --glow: 0 0 20px rgba(110, 0, 255, 0.3);
+        }
+        
+        @font-face {
+            font-family: 'Neue Machina';
+            src: url('https://fonts.cdnfonts.com/css/neue-machina');
+        }
+        
+        body {
+            font-family: 'Neue Machina', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(ellipse at top, var(--bg-dark), var(--bg-darker));
+            color: var(--text-main);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 4.5rem;
+            margin: 0;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin: 1rem 0 2rem;
+            font-style: italic;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--glow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(110, 0, 255, 0.4);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(110, 0, 255, 0.1), transparent);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .card:hover::before {
+            opacity: 1;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 0 0 1.5rem 0;
+            color: var(--accent-light);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent), transparent);
+            border-radius: 3px;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .highlight {
+            color: var(--accent-light);
+            font-weight: bold;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(110, 0, 255, 0.4);
+        }
+        
+        .staff-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        
+        .staff-item {
+            padding: 1.2rem;
+            margin-bottom: 0.8rem;
+            background: rgba(30, 30, 36, 0.7);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .staff-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .staff-role {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        
+        .staff-server {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .empty-state {
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 1.2rem;
+            background: rgba(30, 30, 36, 0.5);
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .footer a {
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Dancraft</h1>
+                <p class="tagline">The work isn't finished because it has never begun</p>
+            </div>
+        </header>
+        
+        <div class="grid">
+            <section class="card" id="experience">
+                <h2>Previous Experiences</h2>
+                <p>Want to know more about my past experience</p>
+                <a href="#" class="btn">View Details</a>
+            </section>
+            
+            <section class="card" id="about">
+                <h2>More about me</h2>
+                <p>Just some things about me</p>
+                <a href="#" class="btn">Explore Details</a>
+            </section>
+        </div>
+        
+        <div class="grid">
+            <section class="card" id="timezone">
+                <h2>My Timezone</h2>
+                <p>I'm in the UK so my timezone is <span class="highlight">GMT</span></p>
+                <p>This means that the chances are if you are <span class="highlight">NA</span> you are <span class="highlight">5 hours behind</span> me</p>
+                <a href="#" class="btn">Timezone Info</a>
+            </section>
+            
+            <section class="card" id="recommendations">
+                <h2>Recommendations</h2>
+                <p>My Recommendations</p>
+                <div class="empty-state">Currently None</div>
+                <a href="#" class="btn">View Details</a>
+            </section>
+        </div>
+        
+        <section class="card" id="staffing">
+            <h2>Where I'm staffing now</h2>
+            <p>Where I'm currently staffing (click details to see what each entails)</p>
+            
+            <ul class="staff-list">
+                <li class="staff-item">
+                    <div>
+                        <span class="staff-role">Admin</span>
+                        <span class="staff-server">@SMP Finder</span>
+                    </div>
+                    <a href="#" class="btn">Details</a>
+                </li>
+                <li class="staff-item">
+                    <div>
+                        <span class="staff-role">Sr Mod</span>
+                        <span class="staff-server">@Speed SMP</span>
+                    </div>
+                    <a href="#" class="btn">Details</a>
+                </li>
+                <li class="staff-item">
+                    <div>
+                        <span class="staff-role">Mod</span>
+                        <span class="staff-server">@Voids Community</span>
+                    </div>
+                    <a href="#" class="btn">Details</a>
+                </li>
+                <li class="staff-item">
+                    <div>
+                        <span class="staff-role">Mod</span>
+                        <span class="staff-server">@Guft's Gooberville</span>
+                    </div>
+                    <a href="#" class="btn">Details</a>
+                </li>
+            </ul>
+        </section>
+        
+        <div class="footer">
+            <p>Made with ♥ using <a href="https://carrd.co" target="_blank">Carrd</a></p>
+        </div>
+    </div>
+</body>
+</html>
